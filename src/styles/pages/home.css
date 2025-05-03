@@ -1,0 +1,5 @@
+@layer utilities {
+  .home-hero {
+    @apply relative h-96 flex items-center justify-center;
+  }
+}
