@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
+import { prisma } from '@/lib/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, {});
 
-  if (!session) {
+  if (!session || !session.user || !session.user.email) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
