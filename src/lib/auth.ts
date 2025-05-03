@@ -4,10 +4,12 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 declare module 'next-auth' {
   interface Session {
     user: {
+      id: string;
       role: 'USER' | 'ADMIN';
     } & DefaultSession['user'];
   }
   interface User {
+    id: string;
     role: 'USER' | 'ADMIN';
   }
 }
@@ -32,6 +34,7 @@ export const authOptions = {
   callbacks: {
     async session({ session, user }) {
       if (session.user && user) {
+        session.user.id = user.id;
         session.user.role = user.role as 'USER' | 'ADMIN';
       }
       return session;
