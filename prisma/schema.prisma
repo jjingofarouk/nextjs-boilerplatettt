@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int          @id @default(autoincrement())
+  email     String       @unique
+  name      String?
+  role      Role         @default(USER)
+  saved     Opportunity[] @relation("SavedOpportunities")
+  applications Application[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model Opportunity {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String
+  category    Category     @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  deadline    DateTime?
+  link        String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  savedBy     User[]       @relation("SavedOpportunities")
+  applications Application[]
+}
+
+model Category {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  slug        String       @unique
+  opportunities Opportunity[]
+}
+
+model Application {
+  id          Int        @id @default(autoincrement())
+  user        User       @relation(fields: [userId], references: [id])
+  userId      Int
+  opportunity Opportunity @relation(fields: [opportunityId], references: [id])
+  opportunityId Int
+  status      String     @default("PENDING")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
