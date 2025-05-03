@@ -1,0 +1,5 @@
+@layer utilities {
+  .opportunity-details {
+    @apply p-8;
+  }
+}
