@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Use Geist font variables defined by geist/font */
 :root {
   --font-geist-sans: 'GeistSans', sans-serif;
   --font-geist-mono: 'GeistMono', monospace;
