@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from './prisma';
 
 export async function fetchUserApplications(userId: string) {
   const applications = await prisma.application.findMany({
